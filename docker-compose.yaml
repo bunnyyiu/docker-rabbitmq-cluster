@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=This is a secret cookie
+    ports:
+      # epmd, a peer discovery service used by RabbitMQ nodes and CLI tools
+      - 4369
+
+      # used by AMQP 0-9-1 and 1.0 clients without and with TLS
+      - 5671
+      - 5672
+
+      # used by Erlang distribution for inter-node and CLI tools communication and is allocated from a dynamic range (limited to a single port by default, computed as AMQP port + 20000)
+      - 25672
+      #  HTTP API clients and rabbitmqadmin (only if the management plugin is enabled)
+      - 15672
